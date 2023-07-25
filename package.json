@@ -1,0 +1,25 @@
+{
+  "name": "ats-lib",
+  "version": "1.0.0",
+  "description": "ATS library",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "eslint challenges/ & jest",
+    "lint": "eslint challenges/"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.5.0",
+    "eslint": "^8.37.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "jest": "^29.5.0"
+  }
+}
