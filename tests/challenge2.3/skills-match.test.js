@@ -5,7 +5,7 @@ import { Skill } from '../../common/model';
 const s1 = new Skill('Skill', 0);
 const s2 = new Skill('skill', 2);
 const s3 = new Skill('Skill2', 2);
-const s4 = new Skill('skill2', 2);
+const s4 = new Skill('skill2', 1);
 
 test('Skills match test', () => {
   expect(
@@ -33,8 +33,24 @@ test('Skills match test', () => {
 
 test('Skills match test', () => {
   expect(
-    Utils.skillsMatch(s4, s3))
+    Utils.skillsMatch(s3, s2))
     .toBe(
       false
+    );
+});
+
+test('Skills match test', () => {
+  expect(
+    Utils.skillsMatch(s3, s4))
+    .toBe(
+      false
+    );
+});
+
+test('Skills match test', () => {
+  expect(
+    Utils.skillsMatch(s4, s3))
+    .toBe(
+      true
     );
 });
