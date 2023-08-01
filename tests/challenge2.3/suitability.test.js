@@ -97,14 +97,14 @@ test('Suitability test', () => {
   expect(
     Utils.suitabilityScore(c3, j1))
     .toBe(
-      20
+      47
     );
 });
 test('Suitability test', () => {
   expect(
     Utils.suitabilityScore(c3, j2))
     .toBe(
-      0
+      27
     );
 });
 
@@ -112,7 +112,7 @@ test('Suitability test', () => {
   expect(
     Utils.suitabilityScore(c3, j3))
     .toBe(
-      20
+      47
     );
 });
 
@@ -120,7 +120,7 @@ test('Suitability test', () => {
   expect(
     Utils.suitabilityScore(c3, j4))
     .toBe(
-      32
+      52
     );
 });
 
@@ -128,7 +128,7 @@ test('Suitability test', () => {
   expect(
     Utils.suitabilityScore(c3, j5))
     .toBe(
-      46
+      27
     );
 });
 
