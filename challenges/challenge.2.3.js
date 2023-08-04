@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { Candidate, Job } from '../common/model.js';
+import { Candidate, Job, Skill } from '../common/model.js';
 
 /**
  * Part 3: Job matching
@@ -19,8 +19,9 @@ import { Candidate, Job } from '../common/model.js';
  */
 const skillsMatch = (candidateSkill, jobSkill) => {
   // ----- Challenge 2.3.1 - Complete the function here ---- //
-
-  return false;
+  const canSkill = candidateSkill.name.toLowerCase();
+  const joSkill = jobSkill.name.toLowerCase();
+  return canSkill === joSkill && candidateSkill.level >= jobSkill.level;
 };
 
 /**
@@ -33,6 +34,7 @@ const skillsMatch = (candidateSkill, jobSkill) => {
  */
 const suitableGender = (candidate, job) => {
   // ----- Challenge 2.3.2 - Complete the function here ---- //
+  if (candidate.gender === job.requiredGender || !job.requiredGender) return true;
   return false;
 };
 
@@ -50,8 +52,18 @@ const suitableGender = (candidate, job) => {
  */
 const suitabilityScore = (candidate, job) => {
   // ----- Challenge 2.3.3 - Complete the function here ---- //
+  const genderSuitablity = suitableGender(candidate, job) ? 20 : 0;
+  let skillMatchCounter = 0;
 
-  return 0;
+  candidate.skills.forEach((CandidateSkill) => {
+    job.requiredSkills.forEach((requiredSkill) => {
+      if (skillsMatch(CandidateSkill, requiredSkill)) {
+        skillMatchCounter++;
+      }
+    });
+  });
+  const suitableScore = (skillMatchCounter / job.requiredSkills.length) * 80 + genderSuitablity;
+  return Math.round(suitableScore);
 };
 
 /**
@@ -66,8 +78,17 @@ const suitabilityScore = (candidate, job) => {
  */
 const hottestCandidate = (candidates, jobs) => {
   // ----- Challenge 2.3.4 - Complete the function here ---- //
+  const hotCandidates = [];
 
-  return 0;
+  candidates.forEach((candidate) => {
+    let suitableScoreValue = 0;
+    jobs.forEach((job) => {
+      if (suitabilityScore(candidate, job) > 80) suitableScoreValue++;
+    });
+    hotCandidates.push(suitableScoreValue);
+  });
+
+  return Math.max(...hotCandidates);
 };
 
 export { skillsMatch, suitableGender, suitabilityScore, hottestCandidate };
