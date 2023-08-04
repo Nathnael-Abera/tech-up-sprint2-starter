@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Candidate } from '../common/model.js';
+import { Candidate, Skill } from '../common/model.js';
 
 /**
  * Part 2: Duplicate Candidate Detection
@@ -30,8 +30,14 @@ import { Candidate } from '../common/model.js';
  */
 const normalizedName = (name) => {
   // ----- Challenge 2.2.1 - Complete the function here ---- //
+  const vowels = ['A', 'E', 'I', 'O', 'U'];
+  name = name.replace(/[^A-Za-z]/g, '');
+  name = name.toUpperCase();
+  name = name.replace(/(.)\1+/g, '$1');
+  const firstLetter = vowels.includes(name[0]) ? name[0] : '';
+  name = name.replace(/[AEIOU]/g, '');
 
-  return name;
+  return firstLetter + name;
 };
 
 /**
@@ -43,10 +49,12 @@ const normalizedName = (name) => {
  * @param {Candidate} candidate2
  * @returns true or false
  */
+
 const areSimilarCandidates = (candidate1, candidate2) => {
   // ----- Challenge 2.2.2 - Complete the function here ---- //
-
-  return false;
+  const dayMilSecond = 24 * 60 * 60 * 1000;
+  return Math.abs(candidate1.dateOfBirth - candidate2.dateOfBirth) / dayMilSecond <= 10 &&
+  normalizedName(candidate1.name) === normalizedName(candidate2.name);
 };
 
 /**
@@ -58,8 +66,13 @@ const areSimilarCandidates = (candidate1, candidate2) => {
  */
 const possibleDuplicates = (newCandidate, candidateList) => {
   // ------ Challenge 2.2.3 - Complete the function here ---- //
-
-  return [];
+  const posibbleDuplicate = [];
+  candidateList.forEach((candidate) => {
+    if (areSimilarCandidates(candidate, newCandidate)) {
+      posibbleDuplicate.push(candidate);
+    }
+  });
+  return posibbleDuplicate;
 };
 
 /**
@@ -77,9 +90,19 @@ const possibleDuplicates = (newCandidate, candidateList) => {
  * @param {Array<Candidate>} candidateList
  * @returns
  */
+
 const candidateIndex = (candidateList) => {
   // ------ Challenge 2.2.4 - Complete the function here ---- //
-  return 0;
+  const candidateNameObj = {};
+
+  candidateList.forEach((candidate) => {
+    const normalName = normalizedName(candidate.name);
+
+    normalName in candidateNameObj
+      ? candidateNameObj[normalName].push(candidate)
+      : candidateNameObj[normalName] = [candidate];
+  });
+  return candidateNameObj;
 };
 
 /**
@@ -92,9 +115,20 @@ const candidateIndex = (candidateList) => {
  *
  * @returns
  */
+
 const duplicateCount = (candidateList) => {
   // ------ Challenge 2.2.5 - Complete the function here ---- //
-  return 0;
+  let duplicateCount = 0;
+  const duplicated = [];
+  candidateList.forEach((candidate) => {
+    if (duplicated.includes(candidate) ||
+    possibleDuplicates(candidate, candidateList).length < 2) {
+      return;
+    }
+    duplicated.push(...possibleDuplicates(candidate, candidateList));
+    duplicateCount++;
+  });
+  return duplicateCount;
 };
 
 export { normalizedName, areSimilarCandidates, possibleDuplicates, duplicateCount, candidateIndex };
